@@ -1,4 +1,5 @@
-# Your task is to build a simple hangman game. Here’s how it should work:
+# Your task is to build a simple hangman game.
+Here’s how it should work:
 
 1. Pick a random word from the attached list, and present the user with a number of empty squares, corresponding to the letters of the word.
 2. Allow the user to enter a letter (any way you like: window prompt, input field, keypress event, virtual keyboard, handwriting recognition, etc.)
