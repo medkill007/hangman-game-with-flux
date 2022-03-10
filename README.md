@@ -9,11 +9,17 @@
 To get full points, your app should also fulfil all of the below requirements:
   •Use Flux architecture for state management.  
   •It should be responsive.  
-  •It should have a landing page for the app that explains the rules, and a separate screen for the actual game.  
+
+  •It should have a landing page for the app that explains the rules, and a separate screen for the actual game. 
+ 
   •We expect an SPA. 
+
   •Allow the user to play more than one game without reloading the page.
+
   •Allow the user to set the length of the word before a new game (determine the minimum and maximum length from the list of words).
+
   •Present the user with a score counter that increments after every incorrect guess.
+
   •Allow the user to continue the previously played game after reloading the page.
   
 
