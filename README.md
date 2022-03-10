@@ -7,7 +7,9 @@
 
 
 To get full points, your app should also fulfil all of the below requirements:
-  •Use Flux architecture for state management.  
+
+  •Use Flux architecture for state management.
+
   •It should be responsive.  
 
   •It should have a landing page for the app that explains the rules, and a separate screen for the actual game. 
