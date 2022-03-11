@@ -48,7 +48,27 @@ export class HangmanQuery extends Query<HangmanState> {
             return availableWordsLenghts;
         }
     );
+    
+    // ez visszaadja az elérhető szavak hosszát tömbben
+    private generateRandomWord = createSelector(
+        this.selectAvailableWords,
+        this.selectChosenWordLength,
+        (availableWords, chosenWordLength) => {
+            let availableWordsByChosenLenght: string[] = [];
 
+            for (let i = 0; i < availableWords.length; i++) {
+                if(availableWords[i].length === chosenWordLength){
+                    availableWordsByChosenLenght.push(availableWords[i]);
+                }
+            }
+
+            return availableWordsByChosenLenght[Math.floor(Math.random() * (availableWordsByChosenLenght.length-1))];
+        }
+    );
+
+    getGenerateRandomWord$ = this.ngRxSelect$(
+        this.generateRandomWord
+    );
     getAvailableWordsLengths$ = this.ngRxSelect$(
         this.selectAvailableWordsLengths
     );

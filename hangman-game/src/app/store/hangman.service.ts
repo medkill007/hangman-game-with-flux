@@ -13,11 +13,19 @@ export class HangmanService {
             availableWords: newWord,
         }));
     }
-
-    updateUserName(newWordLength: number) {
+    
+    updateSelectedWordLength(newWordLength: number) {
         this.hangmanStore.update((state) => ({
             ...state,
             chosenWordLength: newWordLength,
         }));
     }
+    
+    updateCurrentWord(newWord: string) {
+        this.hangmanStore.update((state) => ({
+            ...state,
+            word: newWord,
+        }));
+    }
+
 }

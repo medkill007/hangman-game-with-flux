@@ -1,1 +1,4 @@
 <p>pick-word works!</p>
+<div *ngFor="let chosenWordLength of availableWordsLengths" class="d-flex flex-wrap">
+    <button (click)="selectedWordLength(chosenWordLength)">{{chosenWordLength}}</button>
+</div>
