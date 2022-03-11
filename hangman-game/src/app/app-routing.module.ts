@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PageComponent } from './page/page.component';
+import { PickWordComponent } from './page/view/pick-word/pick-word.component';
 import { TutorialComponent } from './page/view/tutorial/tutorial.component';
 
 const routes: Routes = [
@@ -9,8 +10,12 @@ const routes: Routes = [
     component: PageComponent,
     children: [
       {
-        path: 'asd',
+        path: '',
         component: TutorialComponent,
+      },
+      {
+        path: 'pick-word',
+        component: PickWordComponent,
       },
     ],
   },
