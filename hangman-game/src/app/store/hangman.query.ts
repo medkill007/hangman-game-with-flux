@@ -40,7 +40,7 @@ export class HangmanQuery extends Query<HangmanState> {
         (availableWords) => {
             let availableWordsLenghts: number[] = [];
 
-            availableWords.map((word: string) =>
+            availableWords.forEach((word: string) =>
                 availableWordsLenghts.includes(word.length)
                     ? null
                     : availableWordsLenghts.push(word.length)

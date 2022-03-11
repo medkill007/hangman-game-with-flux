@@ -5,7 +5,7 @@ import { HangmanStore } from './hangman.store';
     providedIn: 'root',
 })
 export class HangmanService {
-    constructor(private hangmanStore: HangmanStore) {}
+    constructor(private hangmanStore: HangmanStore) {    }
 
     addNewWord(newWord: string[]) {
         this.hangmanStore.update((state) => ({
