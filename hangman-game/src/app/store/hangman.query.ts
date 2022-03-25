@@ -34,6 +34,9 @@ export class HangmanQuery extends Query<HangmanState> {
 
     allState$ = this.select();
 
+    getSelectWord$ = this.ngRxSelect$(this.selectWord);
+    getSelectAttemptedLetters$ = this.ngRxSelect$(this.selectAttemptedLetters);
+
     // ez visszaadja az elérhető szavak hosszát tömbben
     private selectAvailableWordsLengths = createSelector(
         this.selectAvailableWords,
@@ -48,8 +51,11 @@ export class HangmanQuery extends Query<HangmanState> {
             return availableWordsLenghts;
         }
     );
-    
-    // ez visszaadja az elérhető szavak hosszát tömbben
+    getAvailableWordsLengths$ = this.ngRxSelect$(
+        this.selectAvailableWordsLengths
+    );
+
+    // kiválaszt egy random szót a szóhossza alapján
     private generateRandomWord = createSelector(
         this.selectAvailableWords,
         this.selectChosenWordLength,
@@ -57,25 +63,40 @@ export class HangmanQuery extends Query<HangmanState> {
             let availableWordsByChosenLenght: string[] = [];
 
             for (let i = 0; i < availableWords.length; i++) {
-                if(availableWords[i].length === chosenWordLength){
+                if (availableWords[i].length === chosenWordLength) {
                     availableWordsByChosenLenght.push(availableWords[i]);
                 }
             }
 
-            return availableWordsByChosenLenght[Math.floor(Math.random() * (availableWordsByChosenLenght.length-1))];
+            return availableWordsByChosenLenght[
+                Math.floor(
+                    Math.random() * (availableWordsByChosenLenght.length - 1)
+                )
+            ];
         }
     );
+    getGenerateRandomWord$ = this.ngRxSelect$(this.generateRandomWord);
 
-    getGenerateRandomWord$ = this.ngRxSelect$(
-        this.generateRandomWord
-    );
-    getAvailableWordsLengths$ = this.ngRxSelect$(
-        this.selectAvailableWordsLengths
-    );
+    // TODO írjatok egy selectort, ami az eltalált helyes betűket adja vissza tömbként
+    private selectCorrectLetters = createSelector(
+        this.selectWord,
+        this.selectAttemptedLetters,
+        (word, attemptedLetters) => {
+            const correctCharacters = attemptedLetters.filter(
+                (attemptedLetter) => word.includes(attemptedLetter)
+            );
+            let selectedCorrectCharacters: string[] = [];
 
-    /* get getAvailableWordsLengths() {
-        return this.ngRxSelect(this.selectAvailableWordsLengths);
-    } */
+            for (let i = 0; i < word.length; i++) {
+                if (correctCharacters.includes(word[i]))
+                    selectedCorrectCharacters.push(word[i]);
+                else selectedCorrectCharacters.push('');
+            }
+
+            return selectedCorrectCharacters;
+        }
+    );
+    getSelectCorrectLetters$ = this.ngRxSelect$(this.selectCorrectLetters);
 
     private ngRxSelect$<UserState, K>(
         mapFn: (state: UserState) => K
@@ -102,25 +123,6 @@ const selectWord = createSelector(baseSelector, (state) => state.word);
 const selectAttemptedLetters = createSelector(baseSelector, (state) => state.attemptedLetters);
 
 
-const selectAvailableWordsLengths = createSelector(
-    selectAvailableWords,
-    (availableWords) => {
-        let availableWordsLenghts:number[] = [];
-
-        availableWords.map((word: string) => ( !availableWordsLenghts.includes(word.length) ?? availableWordsLenghts.push(word.length)));
-
-        return availableWordsLenghts;
-    }
-);
-
-// TODO írjatok egy selectort, ami az eltalált helyes betűket adja vissza tömbként
-const selectCorrectLetters = createSelector(
-    selectWord,
-    selectAttemptedLetters,
-    (word, attemptedLetters) => {
-        return attemptedLetters.filter((attemptedLetter) => word.includes(attemptedLetter));
-    }
-);
 
 const selectIncorrectLetters = createSelector(
     selectWord,

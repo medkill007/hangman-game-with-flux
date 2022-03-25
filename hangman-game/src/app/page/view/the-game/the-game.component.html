@@ -1,1 +1,22 @@
-<p>the-game works!</p>
+<div class="row mt-5">
+    <div class="col-3">
+
+    </div>
+    <div class="col-9">
+        <h2>The Hangman</h2>
+        <ng-container *ngIf="false">
+            <span class="lost">You've lost</span>
+            <span class="won">You've won</span>
+        </ng-container>
+
+        <div class="words row">
+            <div class="character" *ngFor="let character of getSelectWord"><span>{{character}}</span></div>
+        </div>
+
+        <p>Play with a word</p>
+
+        <div class="keyboard">
+            <button *ngFor="let character of allEnglishWord" (click)="isCharacterInSelectedWord(character); actionMethod($event)">{{character}}</button>
+        </div>
+    </div>
+</div>

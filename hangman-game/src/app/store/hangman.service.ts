@@ -28,4 +28,16 @@ export class HangmanService {
         }));
     }
 
+    selectedAttemptedCharacter(selectedCharacter: string) {
+        this.hangmanStore.update((state) => ({
+            ...state,
+            attemptedLetters: [ ...state.attemptedLetters, selectedCharacter.toLowerCase() ],
+        }));
+    }
+    resetAttemptedLetters() {
+        this.hangmanStore.update((state) => ({
+            ...state,
+            attemptedLetters: [],
+        }));
+    }
 }
