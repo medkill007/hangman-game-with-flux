@@ -77,18 +77,39 @@ export class HangmanQuery extends Query<HangmanState> {
     );
     getGenerateRandomWord$ = this.ngRxSelect$(this.generateRandomWord);
 
+    //vissza adja a helytelen karaktereket
+    private selectInCorrectLetters = createSelector(
+        this.selectWord,
+        this.selectAttemptedLetters,
+        (word, attemptedLetters) => {
+            return attemptedLetters.filter(
+                (attemptedLetter) => !word.includes(attemptedLetter)
+            );
+        }
+    );
+    getSelectInCorrectLetters$ = this.ngRxSelect$(this.selectInCorrectLetters);
+
     // TODO írjatok egy selectort, ami az eltalált helyes betűket adja vissza tömbként
     private selectCorrectLetters = createSelector(
         this.selectWord,
         this.selectAttemptedLetters,
         (word, attemptedLetters) => {
-            const correctCharacters = attemptedLetters.filter(
+            return attemptedLetters.filter(
                 (attemptedLetter) => word.includes(attemptedLetter)
             );
+        }
+    );
+    getSelectedCorrectLetters$ = this.ngRxSelect$(this.selectCorrectLetters);
+    
+    // vissza adja a szót az eltalát karakterekkel
+    private selectCorrectLettersInWord = createSelector(
+        this.selectWord,
+        this.selectCorrectLetters,
+        (word, correctedLetters) => {
             let selectedCorrectCharacters: string[] = [];
 
             for (let i = 0; i < word.length; i++) {
-                if (correctCharacters.includes(word[i]))
+                if (correctedLetters.includes(word[i]))
                     selectedCorrectCharacters.push(word[i]);
                 else selectedCorrectCharacters.push('');
             }
@@ -96,7 +117,7 @@ export class HangmanQuery extends Query<HangmanState> {
             return selectedCorrectCharacters;
         }
     );
-    getSelectCorrectLetters$ = this.ngRxSelect$(this.selectCorrectLetters);
+    getSelectCorrectLettersInWord$ = this.ngRxSelect$(this.selectCorrectLettersInWord);
 
     private ngRxSelect$<UserState, K>(
         mapFn: (state: UserState) => K
@@ -124,13 +145,6 @@ const selectAttemptedLetters = createSelector(baseSelector, (state) => state.att
 
 
 
-const selectIncorrectLetters = createSelector(
-    selectWord,
-    selectAttemptedLetters,
-    (word, attemptedLetters) => {
-        return attemptedLetters.filter((attemptedLetter) => !word.includes(attemptedLetter));
-    }
-);
 // TODO a játékot akkor veszti el a játékos, ha 10-szer rossz betűt választott ki
 // Implementáljátok le azt a selectort, ami visszaadja, hogy vesztett-e a user
 const selectGameOver = createSelector(selectIncorrectLetters, (incorrectLetters) => {

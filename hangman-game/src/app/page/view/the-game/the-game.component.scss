@@ -1,19 +1,19 @@
-:host{
+:host {
     display: block;
 }
 
-.lost{
+.lost {
     color: red;
 }
-.won{
+.won {
     color: green;
 }
 
-.words{
+.words {
     margin: 25px 0 30px 0;
 }
 
-.character{
+.character {
     width: 34px;
     height: 34px;
     border: 2px solid black;
@@ -27,11 +27,19 @@
     text-transform: uppercase;
 }
 
-.keyboard{
+.keyboard {
     display: grid;
-    grid-template-columns: repeat(auto-fit,34px);
+    grid-template-columns: repeat(auto-fit, 34px);
     grid-gap: 10px;
     gap: 10px;
     max-width: 300px;
     margin-bottom: 20px;
+}
+
+svg path,
+svg circle {
+    stroke: #000;
+    stroke-width: 0.25;
+    stroke-linecap: round;
+    fill: none;
 }

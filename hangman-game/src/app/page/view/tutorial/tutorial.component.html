@@ -1,2 +1,15 @@
-<p>tutorial works!</p>
-<a routerLink="pick-word">Tovább -></a>
+<h3>Game instructions</h3>
+<p>
+    Select a word length, then the game will give you a random word. You need to
+    guess what letters are in the word. If you are correct, then the game will
+    reveal all the instances of the letter in the word. If you are wrong, one of
+    the hanged stickman's body part will be revealed. Make enough wrong choices,
+    and you lose! You can always start a new game, and you can see the
+    instructions again at any time during the game.
+</p>
+<ng-container *ngIf="(hangmanQuery.getSelectWord$ | async) == '' ; else thegame">
+    <a routerLink="pick-word">Tovább -></a>
+</ng-container>
+<ng-template #thegame>
+    <a routerLink="the-game">Tovább -></a>
+</ng-template>

@@ -1,22 +1,51 @@
 <div class="row mt-5">
     <div class="col-3">
-
+        <!-- prettier-ignore -->
+        <svg
+            viewBox="0 0 10 12"
+            *ngIf="
+                (hangmanQuery.getSelectInCorrectLetters$ | async)?.length !== 0"
+        >
+            <path d="M1,11 h8" *ngIf="(hangmanQuery.getSelectInCorrectLetters$ | async)?.length! >= 1"/>
+            <path d="M9,11 v-10" *ngIf="(hangmanQuery.getSelectInCorrectLetters$ | async)?.length! >= 2"/>
+            <path d="M9,1 h-4" *ngIf="(hangmanQuery.getSelectInCorrectLetters$ | async)?.length! >= 3"/>
+            <path d="M5,1 v2" *ngIf="(hangmanQuery.getSelectInCorrectLetters$ | async)?.length! >= 4"/>
+            <circle cx="5" cy="4" r="1" *ngIf="(hangmanQuery.getSelectInCorrectLetters$ | async)?.length! >= 5"/>
+            <path d="M5,5 v3" *ngIf="(hangmanQuery.getSelectInCorrectLetters$ | async)?.length! >= 6"/>
+            <path d="M5,5 l-2,2" *ngIf="(hangmanQuery.getSelectInCorrectLetters$ | async)?.length! >= 7"/>
+            <path d="M5,5 l2,2" *ngIf="(hangmanQuery.getSelectInCorrectLetters$ | async)?.length! >= 8"/>
+            <path d="M5,8 l-2,2" *ngIf="(hangmanQuery.getSelectInCorrectLetters$ | async)?.length! >= 9"/>
+            <path d="M5,8 l2,2" *ngIf="(hangmanQuery.getSelectInCorrectLetters$ | async)?.length! >= 10"/>
+        </svg>
     </div>
     <div class="col-9">
         <h2>The Hangman</h2>
-        <ng-container *ngIf="false">
-            <span class="lost">You've lost</span>
+        <ng-container *ngIf="win"> <!-- miért nem jó 2 db if? 2db container? "mert nem ez a jó megoldás" mert az egyik incorrectból jön másik a correctből nem? -->
             <span class="won">You've won</span>
+        </ng-container>
+        <ng-container *ngIf="gameover">
+            <span class="lost">You've lost</span>
         </ng-container>
 
         <div class="words row">
-            <div class="character" *ngFor="let character of getSelectWord"><span>{{character}}</span></div>
+            <div class="character" *ngFor="let character of getSelectWord">
+                <span>{{ character }}</span>
+            </div>
         </div>
 
         <p>Play with a word</p>
 
         <div class="keyboard">
-            <button *ngFor="let character of allEnglishWord" (click)="isCharacterInSelectedWord(character); actionMethod($event)">{{character}}</button>
+            <button
+                *ngFor="let character of allEnglishWord"
+                (click)="
+                    isCharacterInSelectedWord(character); actionMethod($event)
+                "
+                [disabled]="gameover || win"
+            >
+                {{ character }}
+            </button>
         </div>
     </div>
 </div>
+<a routerLink="">Instructuions</a>
